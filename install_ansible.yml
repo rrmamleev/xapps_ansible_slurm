@@ -1,0 +1,48 @@
+---
+- hosts: all
+  become: true
+
+  tasks:
+    - name: Add ansible repository.
+      ansible.builtin.apt_repository:
+        repo: 'ppa:ansible/ansible'
+        update_cache: true
+
+    - name: Install Ansible.
+      ansible.builtin.apt:
+        name:
+          - ansible
+          - sshpass
+        state: "latest"
+
+#    - name: Install sshpass.
+#      ansible.builtin.apt:
+#        name:
+#          - ansible
+#          - sshpass
+#        state: "latest"
+
+    - name: Copy private key
+      ansible.builtin.copy:
+        src: key/id_rsa
+        dest: /home/vagrant/.ssh/is_rsa
+        owner: vagrant
+        group: vagrant
+        mode: u=rw,g=,o=
+
+    - name: Copy public key
+      ansible.builtin.copy:
+        src: key/id_rsa.pub
+        dest: /home/vagrant/.ssh/id_rsa.pub
+        owner: vagrant
+        group: vagrant
+        mode: u=rw,g=r,o=r
+
+    - name:  "Install ansible collection"
+      ansible.builtin.command: ansible-galaxy collection install -r ansible/requirements.yml
+
+    - name:  "Install ansible role"
+      ansible.builtin.command: ansible-galaxy role install -r ansible/requirements.yml
+
+    - name:  "Start ansible playbook"
+      ansible.builtin.command: ansible-playbook /home/vagrant/ansible/playbook.yml

@@ -1,10 +1,13 @@
 Vagrant.configure("2") do |config|
 
+#  config.vm.provision "file", source: "key/id_rsa.pub", destination: "/home/vagrant/.ssh/"
+
   config.vm.define "server_xapps" do |server_xapps|
     server_xapps.vm.box = "bento/centos-7.9"
     server_xapps.vm.hostname = "xapps"
     server_xapps.vbguest.auto_update = false
     server_xapps.vm.network "private_network", ip: "192.168.50.3"
+    server_xapps.vm.provision "file", source: "key/id_rsa.pub", destination: "/home/vagrant/.ssh/"
     server_xapps.vm.provision "shell", inline: <<-SHELL
       cat /home/vagrant/.ssh/id_rsa.pub >> /home/vagrant/.ssh/authorized_keys
     SHELL
@@ -27,9 +30,11 @@ Vagrant.configure("2") do |config|
       cd ansible
       ansible-galaxy collection install -r requirements.yml
       ansible-galaxy role install -r requirements.yml
+      ansible-playbook /home/vagrant/ansible/playbook.yml
     SHELL
 #    controlnode.vm.provision "ansible" do |ansible|
-#        ansible.playbook = "make_magic.yml"
+#        ansible.playbook = "install_ansible.yml"
+    end
   end
 
 

@@ -1,0 +1,19 @@
+---
+- name: "Install {{ app_name }} and configure"
+  hosts: "xapps_node"
+  become: true
+  vars:
+    app_name: xapps
+
+  roles:
+  - geerlingguy.repo-epel
+  - geerlingguy.repo-remi
+  - geerlingguy.nginx
+  - { role: rvm.ruby,
+      tags: ruby,
+      rvm1_rubies: ['ruby-2.4.2'],
+      rvm1_install_flags: '--auto-dotfiles',
+      rvm1_install_path: /usr/local/rvm,
+      rvm1_user: root,
+      rvm1_gpg_key_server: 'hkp://keyserver.ubuntu.com'
+    }
