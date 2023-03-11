@@ -23,17 +23,18 @@ Vagrant.configure("2") do |config|
     controlnode.vm.provision "shell", inline: <<-SHELL
       sed -i 's/ChallengeResponseAuthentication no/ChallengeResponseAuthentication yes/#g' /etc/ssh/sshd_config
       service ssh restart
-      sudo add-apt-repository -y ppa:ansible/ansible
-      sudo apt update && sudo apt -y install ansible sshpass
-      chmod 600 /home/vagrant/.ssh/id_rsa
-      chmod 644 /home/vagrant/.ssh/id_rsa.pub
-      cd ansible
-      ansible-galaxy collection install -r requirements.yml
-      ansible-galaxy role install -r requirements.yml
-      ansible-playbook /home/vagrant/ansible/playbook.yml
+#      sudo add-apt-repository -y ppa:ansible/ansible
+#      sudo apt update && sudo apt -y install ansible sshpass
+#      chmod 600 /home/vagrant/.ssh/id_rsa
+#      chmod 644 /home/vagrant/.ssh/id_rsa.pub
+#      su vagrant
+#      cd ansible
+#      ansible-galaxy collection install -r requirements.yml
+#      ansible-galaxy role install -r requirements.yml
+#      ansible-playbook /home/vagrant/ansible/playbook.yml
     SHELL
-#    controlnode.vm.provision "ansible" do |ansible|
-#        ansible.playbook = "install_ansible.yml"
+    controlnode.vm.provision "ansible" do |ansible|
+        ansible.playbook = "install_ansible.yml"
     end
   end
 

@@ -1,7 +1,7 @@
 roles:
-- src: geerlingguy.nginx
 - src: geerlingguy.repo-epel
 - src: geerlingguy.repo-remi
+- src: geerlingguy.nginx
 - src: rvm.ruby
 
 collections:

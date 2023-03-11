@@ -40,9 +40,13 @@
 
     - name:  "Install ansible collection"
       ansible.builtin.command: ansible-galaxy collection install -r ansible/requirements.yml
+        become: vagrant
 
     - name:  "Install ansible role"
       ansible.builtin.command: ansible-galaxy role install -r ansible/requirements.yml
+        become: vagrant
 
     - name:  "Start ansible playbook"
       ansible.builtin.command: ansible-playbook /home/vagrant/ansible/playbook.yml
+        become: vagrant
+        
