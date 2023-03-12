@@ -1,0 +1,6 @@
+---
+# handlers file for install_postgres
+- name: "Restart postgresql"
+  service:
+    name: "{{ postgresql_daemon }}"
+    state: restarted

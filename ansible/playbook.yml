@@ -4,16 +4,27 @@
   become: true
   vars:
     app_name: xapps
+    RAILS_ENV: production
+    RAILS_LOG_TO_STDOUT: 1
+#    db_name: ""
+#    db_user: ""
+#    db_password: ""
+
+  pre_tasks:
+  - name: Update ca-certificates
+    yum: name=ca-certificates state=latest
+
 
   roles:
-  - geerlingguy.repo-epel
-  - geerlingguy.repo-remi
-  - geerlingguy.nginx
-  - { role: rvm.ruby,
-      tags: ruby,
-      rvm1_rubies: ['ruby-2.4.2'],
-      rvm1_install_flags: '--auto-dotfiles',
-      rvm1_install_path: /usr/local/rvm,
-      rvm1_user: root,
-      rvm1_gpg_key_server: 'hkp://keyserver.ubuntu.com'
-    }
+#  - geerlingguy.repo-epel
+#  - geerlingguy.repo-remi
+#  - geerlingguy.nginx
+#  - { role: rvm.ruby,
+#      tags: ruby,
+#      rvm1_rubies: ['ruby-2.6.1'],
+#      rvm1_install_flags: '--auto-dotfiles',
+#      rvm1_install_path: /usr/local/rvm,
+#      rvm1_user: root,
+#      rvm1_gpg_key_server: 'hkp://keyserver.ubuntu.com'
+#    }
+    - install_postgres

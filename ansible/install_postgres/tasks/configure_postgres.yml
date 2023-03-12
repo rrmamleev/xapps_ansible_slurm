@@ -1,0 +1,40 @@
+#Создаём базу данных
+- name: "Create DB {{ db_name | default(postgresql_dbname_default) }}"
+  postgresql_db:
+    state: present
+    name: "{{ db_name | default(postgresql_dbname_default) }}"
+  become: true
+  become_user: "{{ postgresql_user_to_nix }}"
+
+#Создаём пользователя БД
+- name: "Create user {{ db_user | default(postgresql_user_default) }}"
+  postgresql_user:
+    state: present
+    name: "{{ db_user | default(postgresql_user_default) }}"
+    password: "{{ db_password | default(postgresql_password_default) }}"
+  become: true
+  become_user: "{{ postgresql_user_to_nix }}"
+
+#Даём доступ созданному пользователю к БД
+- name: "Grant user {{ db_user | default(postgresql_user_default) }} access to DB {{ db_name | default(postgresql_dbname_default) }}"
+  postgresql_privs:
+    type: database
+    database: "{{ db_name | default(postgresql_dbname_default) }}"
+    roles: "{{ db_user | default(postgresql_user_default) }}"
+    grant_option: no
+    privs: all
+  become: true
+  become_user: "{{ postgresql_user_to_nix }}"
+
+#Разрешаем пользователю подключаться по паролю
+- name: "Allow pass connection for the user {{ db_user | default(postgresql_user_default) }}"
+  postgresql_pg_hba:
+    dest: "{{ postgresql_data_dir }}/pg_hba.conf"
+    contype: host
+    databases: "{{ db_name | default(postgresql_dbname_default) }}"
+    method: password
+    users: "{{ db_user | default(postgresql_user_default) }}"
+    create: true
+  become: true
+  become_user: "{{ postgresql_user_to_nix }}"
+  notify: "Restart postgresql"

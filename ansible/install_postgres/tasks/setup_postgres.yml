@@ -1,0 +1,24 @@
+#Устанавливаем постгрес
+  - name: "Install postgresql"
+    ansible.builtin.yum:
+      name: "{{ postgresql_packages }}"
+      state: present
+      update_cache: yes
+
+#Ищем конфиг инициализирован ли и пишем в переменную
+  - name: "Find out if postgresql is init"
+    ansible.builtin.stat:
+      path: "{{ postgresql_data_dir }}/pg_hba.conf"
+    register: postgres_data
+
+#Инициализируем постгрес, не придумал как избавиться от комманда, поэтому так.
+  - name: "Init postgresql"
+    command: "postgresql-setup initdb"
+    when: not postgres_data.stat.exists
+
+#Стартуем сервис
+  - name: "Start service postgres"
+    service:
+      name: "{{ postgresql_daemon }}"
+      state: started
+      enabled: true

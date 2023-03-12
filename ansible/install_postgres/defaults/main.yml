@@ -1,0 +1,5 @@
+---
+# defaults file for install_postgres
+postgresql_dbname_default: "xappsdb"
+postgresql_user_default: "xapp"
+postgresql_password_default: "P@ssw0rd"
