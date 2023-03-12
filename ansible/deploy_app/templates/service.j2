@@ -1,0 +1,17 @@
+[Unit]
+Description=XPASTE
+Documentation=https://slurm.io
+After=network.target
+
+[Service]
+WorkingDirectory=/usr/local/xpaste
+User=root
+ExecStartPre=
+ExecStart=/bin/bash -lc 'source /etc/profile.d/rvm.sh; SECRET_KEY_BASE={{ SECRET_KEY_BASE }} RAILS_ENV={{ RAILS_ENV }} RAILS_LOG_TO_STDOUT={{ RAILS_LOG_TO_STDOUT }} DB_HOST={{ DB_HOST }} DB_PORT={{ DB_PORT }} DB_NAME={{ DB_NAME }} DB_USER={{ DB_USER }} DB_PASSWORD={{ DB_PASSWORD }} bundle exec puma -b unix:/var/run/puma.sock -e $RAILS_ENV config.ru'
+ExecReload=/bin/kill -USR1 $MAINPID
+ExecStop=/bin/kill -TSTP $MAINPID
+Restart=always
+Type=simple
+
+[Install]
+WantedBy=multi-user.target

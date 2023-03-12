@@ -10,6 +10,9 @@
 # Создаём Бандл приложения
 - include_tasks: config_bandle.yml
 
+# Делаем миграцию базы данных
+- include_tasks: migrate_base.yml
+
 # Создаём сервис приложения и стартуем его
 - include_tasks: config_service.yml
 
