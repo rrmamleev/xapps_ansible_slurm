@@ -1,10 +1,2 @@
 ---
 # vars file for deploy_app
-app_dependencies:
-      - git
-      - nodejs
-      - "@development-tools"
-      - libxml2-devel
-      - libxslt-devel
-      - postgresql-devel
-      - ruby-devel

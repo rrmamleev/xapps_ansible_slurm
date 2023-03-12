@@ -1,14 +1,14 @@
 # Проверяем существует ли сервис приложения
 - name: "Checking if the application service exists"
   stat:
-    path: /etc/systemd/system/{{ app_name }}.service
+    path: "/etc/systemd/system/{{ app_name }}.service"
   register: service_file
 
 # Копируем файл сервиса из шаблона
 - name: "Copy service file {{ app_name }}"
   ansible.builtin.template:
     src: service.j2
-    dest: /etc/systemd/system/{{ app_name }}.service
+    dest: "/etc/systemd/system/{{ app_name }}.service"
   when: not service_file.stat.exists
 
 # Стартуем сервис приложения

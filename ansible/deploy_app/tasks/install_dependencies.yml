@@ -1,0 +1,10 @@
+# Вставляем список зависимостей для приложения в плейбук
+- name: "Include variables"
+  include_vars: dependencies.yml
+
+# Устанавливаем зависимости приложения
+- name: "Install dependencies {{ app_name }}"
+  ansible.builtin.yum:
+    name: "{{ app_dependencies }}"
+    state: latest
+    update_cache: yes
