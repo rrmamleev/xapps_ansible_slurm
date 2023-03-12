@@ -12,5 +12,9 @@
     remote_src: true
 
 - name: "Replace nginx.conf path"
-  shell: sed -i 's+/app/public+/applications/{{app_name}}/app/assets+' /etc/nginx/nginx.conf
+  ansible.builtin.replace:
+    path: "/etc/nginx/nginx.conf"
+    regexp: "/app/public"
+    replace: "/applications/{{ app_name }}/app/assets"
+    validate: nginx -c %s -t
   notify: "Reload nginx"
