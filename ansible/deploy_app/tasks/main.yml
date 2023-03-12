@@ -1,5 +1,27 @@
 ---
 # tasks file for deploy_app
+# Устанавливаем зависимости приложения
+- name: "Install dependencies {{ app_name }}"
+  ansible.builtin.yum:
+    name: {{ app_dependencies }}
+    state: latest
+    update_cache: yes
 
+# Вставляем таски с файлами проекта
+- include_tasks: copy_files_app.yml
+
+# Создаём Бандл приложения
+- name: "Install {{app_name}} with bundler module"
+  community.general.bundler:
+    state: present
+    deployment_mode: yes
+    chdir: /applications/{{app_name}}
+    executable: /usr/local/bin/bundle
+    extra_args: --clean --no-cache
+    exclude_groups: development
+
+# Создаём сервис приложения и стартуем его
 - include_tasks: config_service.yml
+
+# Копируем nginx.conf, robots.txt и перезапускаем nginx
 - include_tasks: config_nginx.yml

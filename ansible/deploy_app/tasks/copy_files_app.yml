@@ -1,0 +1,12 @@
+#Проверяем есть папка с приложением, результат пишем в переменную
+- name: "Check exists directory"
+  stat:
+    path: /applications/{{app_name}}
+  register: app_files
+
+#Копируем проект с GIT репозитория, если папки нет
+- name: "Copy {{app_name}} files from the repo project"
+  ansible.builtin.git:
+    repo: "https://{{ gitlab_user | urlencode }}:{{ gitlab_password | urlencode }}@gitlab.slurm.io/edu/xpaste_practicum.git"
+    dest: /applications/{{app_name}}
+  when: not app_files.stat.exists

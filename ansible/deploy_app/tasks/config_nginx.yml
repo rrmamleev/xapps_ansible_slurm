@@ -1,0 +1,16 @@
+#Копируем nginx.conf
+- name: "Copy nginx.conf"
+  ansible.builtin.copy:
+    src: /applications/{{app_name}}/config/nginx.conf
+    dest: /etc/nginx/nginx.conf
+    remote_src: true
+
+- name: "Copy robots.txt"
+  ansible.builtin.copy:
+    src: /applications/{{app_name}}/public/robots.txt
+    dest: /applications/{{app_name}}/app/assets/robots.txt
+    remote_src: true
+
+- name: "Replace nginx.conf path"
+  shell: sed -i 's+/app/public+/applications/{{app_name}}/app/assets+' /etc/nginx/nginx.conf
+  notify: "Reload nginx"
