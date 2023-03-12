@@ -1,2 +1,3 @@
 ---
 # vars file for deploy_app
+app_dir: "/applications/{{ app_name }}"

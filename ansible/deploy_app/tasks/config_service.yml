@@ -4,17 +4,38 @@
     path: "/etc/systemd/system/{{ app_name }}.service"
   register: service_file
 
-# Копируем файл сервиса из шаблона
+# Копируем файл сервиса приложения и миграции баз из шаблона
 - name: "Copy service file {{ app_name }}"
   ansible.builtin.template:
-    src: service.j2
-    dest: "/etc/systemd/system/{{ app_name }}.service"
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  with_items:
+    - src: service.j2
+      dest: "/etc/systemd/system/{{ app_name }}.service"
+    - src: migrate_base.service.j2
+      dest: /etc/systemd/system/migrate_base.service
   when: not service_file.stat.exists
 
-# Стартуем сервис приложения
+# Выполняем миграцию базы данных.
+
+# Решил вынести миграцию базы данных в отдельный таск, а не делать миграцию
+# перед каждым запуском, как по заданию. Мне кажется это более правильно
+# запускать миграции отдельно при смене версии приложения, чем делать миграцию
+# при каждом запуске приложения - это же займет время + лишний риск потери данных.
+# Реализован запуск миграции через сервис.
+
+# Стартуем сервис миграции базы данных БЕЗ автозагрузки
 - name: "Start {{ app_name }} service"
   systemd:
-    name: "{{ app_name }}"
+    name: migrate_base.service
+    state: started
+    enabled: true
+    daemon_reload: false
+
+# Стартуем сервис приложения и прописываем в автозагрузку
+- name: "Start {{ app_name }} service"
+  systemd:
+    name: "{{ app_name }}".service
     state: started
     enabled: true
     daemon_reload: true

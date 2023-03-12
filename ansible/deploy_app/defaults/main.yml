@@ -1,2 +1,10 @@
 ---
 # defaults file for deploy_app
+SECRET_KEY_BASE_default: "20f23229d677470667ba1402f28c5c5b" #Зашифровать!
+RAILS_ENV_default: "production"
+RAILS_LOG_TO_STDOUT_default: "1"
+DB_HOST_default: "127.0.0.1"
+DB_PORT_default: "5432"
+DB_NAME_default: "xappsdb"
+DB_USER_default: "xapp"
+DB_PASSWORD_default: "P@ssw0rd" #Зашифровать!

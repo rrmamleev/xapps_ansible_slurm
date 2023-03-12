@@ -3,7 +3,7 @@
   community.general.bundler:
     state: present
     deployment_mode: yes
-    chdir: /applications/{{app_name}}
+    chdir: "{{ app_dir }}"
     executable: /usr/local/bin/bundle
     extra_args: --clean --no-cache
     exclude_groups: development

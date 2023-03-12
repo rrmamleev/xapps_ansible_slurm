@@ -1,7 +1,6 @@
-
 [Unit]
-Description={{ app_name }}
-After=migrate_base.service
+Description=migrate_base for {{ app_name }}
+After=network.target
 
 [Service]
 WorkingDirectory={{ app_dir }}
@@ -13,8 +12,8 @@ Environment="DB_PORT={{ DB_PORT | default(DB_PORT_default) }}"
 Environment="DB_NAME={{ DB_NAME | default(DB_NAME_default) }}"
 Environment="DB_USER={{ DB_USER | default() }}"
 Environment="DB_PASSWORD={{ DB_PASSWORD | default(DB_PASSWORD_default) }}"
-ExecStart=/usr/bin/bundle exec puma -b unix:///var/run/puma.sock -e $RAILS_ENV config.ru
-Restart=always
+ExecStart=/usr/bin bundle exec rake db:migrate
+Type=oneshot
 
 [Install]
 WantedBy=multi-user.target
