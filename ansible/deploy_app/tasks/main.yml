@@ -1,5 +1,10 @@
 ---
 # tasks file for deploy_app
+
+# Вставляем список зависимостей для приложения в плейбук
+- name: "Include variables"
+  include_vars: dependencies.yml
+
 # Устанавливаем зависимости приложения
 - name: "Install dependencies {{ app_name }}"
   ansible.builtin.yum:
