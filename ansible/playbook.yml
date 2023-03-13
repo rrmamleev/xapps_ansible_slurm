@@ -36,4 +36,4 @@
 #      rvm1_gpg_key_server: 'hkp://keyserver.ubuntu.com'
 #    }
 #    - install_postgres
-    - deploy_ruby_app
+    - deploy_app

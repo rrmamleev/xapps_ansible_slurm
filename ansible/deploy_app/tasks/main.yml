@@ -2,17 +2,17 @@
 # tasks file for deploy_app
 
 # Устанаваливаем зависимости приложения
-- include_tasks: install_dependencies.yml
+#- include_tasks: install_dependencies.yml
 
 # Копируем файлы проекта
-- include_tasks: copy_files_app.yml
+#- include_tasks: copy_files_app.yml
 
 # Создаём Бандл приложения
-- include_tasks: config_bandle.yml
+#- include_tasks: config_bandle.yml
 
 # Создаём сервис приложения и стартуем его
 # Также в этом файле мы настраиваем миграцию БД
-- include_tasks: config_service.yml
+#- include_tasks: config_service.yml
 
 # Копируем nginx.conf, robots.txt и перезапускаем nginx
 - include_tasks: config_nginx.yml

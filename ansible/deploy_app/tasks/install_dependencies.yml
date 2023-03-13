@@ -2,6 +2,12 @@
 - name: "Include variables"
   include_vars: dependencies.yml
 
+- name: "Adding repo for ruby package"
+  ansible.builtin.yum:
+    name: centos-release-scl-rh
+    state: present
+    update_cache: yes
+
 # Устанавливаем зависимости приложения
 - name: "Install dependencies {{ app_name }}"
   ansible.builtin.yum:

@@ -35,7 +35,7 @@
 # Стартуем сервис приложения и прописываем в автозагрузку
 - name: "Start {{ app_name }} service"
   systemd:
-    name: "{{ app_name }}".service
+    name: "{{ app_name }}.service"
     state: started
     enabled: true
     daemon_reload: true

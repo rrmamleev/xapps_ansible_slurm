@@ -10,10 +10,10 @@ Environment="RAILS_ENV={{ RAILS_ENV | default(RAILS_ENV_default) }}"
 Environment="RAILS_LOG_TO_STDOUT={{ RAILS_LOG_TO_STDOUT | default(RAILS_LOG_TO_STDOUT_default) }}"
 Environment="DB_HOST={{ DB_HOST | default(DB_HOST_default) }}"
 Environment="DB_PORT={{ DB_PORT | default(DB_PORT_default) }}"
-Environment="DB_NAME={{ DB_NAME | default(DB_NAME_default) }}"
-Environment="DB_USER={{ DB_USER | default() }}"
-Environment="DB_PASSWORD={{ DB_PASSWORD | default(DB_PASSWORD_default) }}"
-ExecStart=/usr/bin/bundle exec puma -b unix:///var/run/puma.sock -e $RAILS_ENV config.ru
+Environment="DB_NAME={{ db_name | default(DB_NAME_default) }}"
+Environment="DB_USER={{ db_user | default(DB_USER_default) }}"
+Environment="DB_PASSWORD={{ db_password | default(DB_PASSWORD_default) }}"
+ExecStart={{ app_dir }}/bundle exec puma -b unix:///var/run/puma.sock -e $RAILS_ENV config.ru
 Restart=always
 
 [Install]
