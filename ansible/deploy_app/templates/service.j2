@@ -13,7 +13,7 @@ Environment="DB_PORT={{ DB_PORT | default(DB_PORT_default) }}"
 Environment="DB_NAME={{ db_name | default(DB_NAME_default) }}"
 Environment="DB_USER={{ db_user | default(DB_USER_default) }}"
 Environment="DB_PASSWORD={{ db_password | default(DB_PASSWORD_default) }}"
-ExecStart={{ app_dir }}/bundle exec puma -b unix:///var/run/puma.sock -e $RAILS_ENV config.ru
+ExecStart={{ app_dir }}/bundle exec puma -b unix:/var/run/puma.sock -e $RAILS_ENV config.ru
 Restart=always
 
 [Install]

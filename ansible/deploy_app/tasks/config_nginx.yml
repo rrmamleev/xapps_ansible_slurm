@@ -6,17 +6,17 @@
     remote_src: true
 
 # Копируем robots.txt
-- name: "Copy robots.txt"
-  ansible.builtin.copy:
-    src: "{{ app_dir }}/public/robots.txt"
-    dest: "{{ app_dir }}/app/assets/robots.txt"
-    remote_src: true
+#- name: "Copy robots.txt"
+#  ansible.builtin.copy:
+#    src: "{{ app_dir }}/public/robots.txt"
+#    dest: "{{ app_dir }}/app/assets/robots.txt"
+#    remote_src: true
 
 # Обновляем конфигурацию и перезапускаем nginx
 - name: "Replace nginx.conf path"
   ansible.builtin.replace:
     path: "/etc/nginx/nginx.conf"
     regexp: "/app/public"
-    replace: "{{ app_dir }}/app/assets"
+    replace: "{{ app_dir }}/app/public"
     validate: nginx -c %s -t
   notify: "Reload nginx"

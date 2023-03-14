@@ -17,6 +17,7 @@
 #    db_name: ""
 #    db_user: ""
 #    db_password: ""
+#    app_socket: ""
 
   pre_tasks:
   - name: Update ca-certificates

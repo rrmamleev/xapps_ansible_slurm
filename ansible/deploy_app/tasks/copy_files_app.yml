@@ -4,6 +4,24 @@
     path: "{{ app_dir }}"
   register: app_files
 
+- name: "Create app folder"
+  ansible.builtin.file:
+      path: /applications
+      owner: root
+      group: root
+      mode: '0644'
+      state: directory
+  when: not app_files.stat.exists
+
+- name: "Create app folder 2"
+  ansible.builtin.file:
+      path: /applications/xapps
+      owner: root
+      group: root
+      mode: '0644'
+      state: directory
+  when: not app_files.stat.exists
+
 #Копируем проект с GIT репозитория, если папки нет
 - name: "Copy {{ app_name }} files from the repo project"
   ansible.builtin.git:
