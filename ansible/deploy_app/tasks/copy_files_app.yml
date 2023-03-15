@@ -8,18 +8,18 @@
 - name: "Create app folder"
   ansible.builtin.file:
       path: /applications
-      owner: root
-      group: root
-      mode: '0644'
+#      owner: vagrant
+#      group: vagrant
+#      mode: '0644'
       state: directory
   when: not app_files.stat.exists
 
 - name: "Create app folder 2"
   ansible.builtin.file:
       path: /applications/xapps
-      owner: root
-      group: root
-      mode: '0644'
+#      owner: vagrant
+#      group: vagrant
+#      mode: '0644'
       state: directory
   when: not app_files.stat.exists
 
@@ -34,5 +34,10 @@
 - name: "Copy folder assets to public"
   ansible.builtin.copy:
     src: "{{ app_dir }}/app/assets"
-    dest: "{{ app_dir }}/public"
-  when: not app_files.stat.exists
+    dest: "{{ app_dir }}/public/"
+#    owner: vagrant
+#    group: vagrant
+#    mode: '0644'
+    remote_src: yes
+#    directory_mode: yes
+#  when: not app_files.stat.exists

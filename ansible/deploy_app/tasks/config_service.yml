@@ -14,7 +14,7 @@
       dest: "/etc/systemd/system/{{ app_name }}.service"
     - src: migrate_base.service.j2
       dest: /etc/systemd/system/migrate_base.service
-  when: not service_file.stat.exists
+#  when: not service_file.stat.exists
   notify:
   - Reload systemctl
 

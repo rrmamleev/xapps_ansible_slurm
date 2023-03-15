@@ -1,5 +1,5 @@
 ---
 # vars file for deploy_app
-app_dir: "/applications/{{ app_name }}"
-app_socket_default: "/var/run/puma.sock"
+app_dir: "/work/www/x"
+app_socket_default: "/tmp/puma.sock"  #/var/run/puma.sock
 app_node_default: "xapps_node"
