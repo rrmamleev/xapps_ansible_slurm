@@ -4,6 +4,7 @@
     path: "{{ app_dir }}"
   register: app_files
 
+#Создаём папки
 - name: "Create app folder"
   ansible.builtin.file:
       path: /applications
@@ -27,4 +28,11 @@
   ansible.builtin.git:
     repo: "https://{{ gitlab_user | urlencode }}:{{ gitlab_password | urlencode }}@gitlab.slurm.io/edu/xpaste_practicum.git"
     dest: "{{ app_dir }}"
+  when: not app_files.stat.exists
+
+#Копируем содержимое папки assets в папку public
+- name: "Copy folder assets to public"
+  ansible.builtin.copy:
+    src: "{{ app_dir }}/app/assets"
+    dest: "{{ app_dir }}/public"
   when: not app_files.stat.exists

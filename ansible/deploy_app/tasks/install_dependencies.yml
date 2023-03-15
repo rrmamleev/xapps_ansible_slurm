@@ -2,6 +2,7 @@
 - name: "Include variables"
   include_vars: dependencies.yml
 
+#Устанавливаем репозиторий
 - name: "Adding repo for ruby package"
   ansible.builtin.yum:
     name: centos-release-scl-rh

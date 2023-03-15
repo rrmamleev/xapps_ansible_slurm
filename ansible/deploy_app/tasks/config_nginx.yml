@@ -1,9 +1,18 @@
-#Копируем nginx.conf
+#Генерируем nginx.conf и перезапускаем nginx
 - name: "Copy nginx.conf"
-  ansible.builtin.copy:
-    src: "{{ app_dir }}/config/nginx.conf"
+  ansible.builtin.template:
+    src: nginx.conf.j2
     dest: /etc/nginx/nginx.conf
     remote_src: true
+  notify: "Reload nginx"
+
+
+#Копируем nginx.conf
+#- name: "Copy nginx.conf"
+#  ansible.builtin.copy:
+#    src: "{{ app_dir }}/config/nginx.conf"
+#    dest: /etc/nginx/nginx.conf
+#    remote_src: true
 
 # Копируем robots.txt
 #- name: "Copy robots.txt"
@@ -13,10 +22,10 @@
 #    remote_src: true
 
 # Обновляем конфигурацию и перезапускаем nginx
-- name: "Replace nginx.conf path"
-  ansible.builtin.replace:
-    path: "/etc/nginx/nginx.conf"
-    regexp: "/app/public"
-    replace: "{{ app_dir }}/app/public"
-    validate: nginx -c %s -t
-  notify: "Reload nginx"
+#- name: "Replace nginx.conf path"
+#  ansible.builtin.replace:
+#    path: "/etc/nginx/nginx.conf"
+#    regexp: "/app/public"
+#    replace: "{{ app_dir }}/app/public"
+#    validate: nginx -c %s -t
+#  notify: "Reload nginx"

@@ -1,6 +1,6 @@
 # Создаём Бандл приложения
-  - name: "Config {{app_name}} with bundler module"
-    ansible.builtin.command: bash -lc 'cd {{ app_path }} && bundle config build.nokogiri --use-system-libraries'
+- name: "Config {{app_name}} with bundler module"
+  ansible.builtin.command: bash -lc 'cd {{ app_path }} && bundle config build.nokogiri --use-system-libraries'
 
 - name: "Install {{app_name}} with bundler module"
   community.general.bundler:

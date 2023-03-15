@@ -7,6 +7,4 @@ app_dependencies:
       - postgresql-devel
       - libpqxx-devel
       - ruby-devel
-#      - ffi:1.9.23
-#      - puma:3.11.3
-#      - nokogiri
+      - gzip
