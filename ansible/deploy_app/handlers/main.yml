@@ -9,3 +9,7 @@
     service:
       name: "{{ app_name }}"
       state: reloaded
+
+  - name: "Reload systemctl"
+    ansible.builtin.command: systemctl daemon-reload
+    become: true
