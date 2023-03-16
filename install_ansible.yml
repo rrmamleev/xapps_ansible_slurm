@@ -15,13 +15,6 @@
           - sshpass
         state: "latest"
 
-#    - name: Install sshpass.
-#      ansible.builtin.apt:
-#        name:
-#          - ansible
-#          - sshpass
-#        state: "latest"
-
     - name: Copy private key
       ansible.builtin.copy:
         src: key/id_rsa

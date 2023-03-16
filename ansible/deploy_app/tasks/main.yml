@@ -7,10 +7,14 @@
 # Копируем с репозитория приложение
 - include_tasks: copy_files_git.yml
 
+
+# Выбор плея в зависимости от способа разворачивания приложения
+- include: "{{ 'install_app_soft.yml' if choose_your_love else 'install_app_hard.yml' }}"
+
 # Разворачиваем приложение правильным способом (soft)
-- include_tasks: install_app_soft.yml
-  when: soft choose_your_love
+#- include_tasks: install_app_soft.yml
+#  when: true choose_your_love
 
 # Разворачиваем приложение альтернативным способом (hard)
-- include_tasks: install_app_hard.yml
-  when: hard choose_your_love
+#- include_tasks: install_app_hard.yml
+#  when: false choose_your_love

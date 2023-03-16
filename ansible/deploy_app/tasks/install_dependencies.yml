@@ -15,3 +15,10 @@
     name: "{{ app_dependencies }}"
     state: latest
     update_cache: yes
+
+#Чиним стили
+- name: "Config /config/puma-production.rb"
+  ansible.builtin.replace:
+    path: "{{ app_dir }}/config/environments/production.rb"
+    regexp: "config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?"
+    replace: "config.public_file_server.enabled = true"

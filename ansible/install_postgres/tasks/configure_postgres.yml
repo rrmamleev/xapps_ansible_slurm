@@ -21,7 +21,7 @@
     type: database
     database: "{{ db_name | default(postgresql_dbname_default) }}"
     roles: "{{ db_user | default(postgresql_user_default) }}"
-    grant_option: no
+    grant_option: yes
     privs: all
   become: true
   become_user: "{{ postgresql_user_to_nix }}"

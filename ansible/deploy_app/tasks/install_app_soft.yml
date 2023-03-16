@@ -1,2 +1,7 @@
 # Настраиваем файлы заботливо приготовленные разработчиком для нас
 - include_tasks: config_ruby_project.yml
+
+#Запускаем скрипт
+- name: "Config {{app_name}} with bundler module"
+  ansible.builtin.command: "SECRET_KEY_BASE={{ SECRET_KEY_BASE | default(SECRET_KEY_BASE_default) }} RAILS_ENV={{ RAILS_ENV | default(RAILS_ENV_default) }} RAILS_LOG_TO_STDOUT={{ RAILS_LOG_TO_STDOUT | default(RAILS_LOG_TO_STDOUT_default) }} DB_HOST={{ DB_HOST | default(DB_HOST_default) }} DB_PORT={{ DB_PORT | default(DB_PORT_default) }} DB_NAME={{ db_name | default(DB_NAME_default) }} DB_USER={{ db_user | default(DB_USER_default) }} DB_PASSWORD={{ db_password | default(DB_PASSWORD_default) }} ruby {{ app_dir }}/app/config/deploy.rb"
+# хз как запустить индепотентно. Если найду - исправлю.

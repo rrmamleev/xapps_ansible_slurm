@@ -7,21 +7,21 @@
 #Создаём папки
 - name: "Create app folder"
   ansible.builtin.file:
-      path: /applications
-#      owner: vagrant
-#      group: vagrant
-#      mode: '0644'
+      path: "{{ app_dir }}"
+      owner: vagrant
+      group: vagrant
+      mode: '0755'
       state: directory
   when: not app_files.stat.exists
 
-- name: "Create app folder 2"
-  ansible.builtin.file:
-      path: /applications/xapps
+#- name: "Create app folder 2"
+#  ansible.builtin.file:
+#      path: /applications/xapps
 #      owner: vagrant
 #      group: vagrant
 #      mode: '0644'
-      state: directory
-  when: not app_files.stat.exists
+#      state: directory
+#  when: not app_files.stat.exists
 
 #Копируем проект с GIT репозитория, если папки нет
 - name: "Copy {{ app_name }} files from the repo project"
