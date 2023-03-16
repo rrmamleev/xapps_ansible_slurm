@@ -3,3 +3,5 @@
 app_dir: "/work/www/x"
 app_socket_default: "/tmp/puma.sock"  #/var/run/puma.sock
 app_node_default: "xapps_node"
+user_app: "vagrant"
+user_app_pass: "vagrant"

@@ -18,7 +18,9 @@
 #   Надо выбрать soft или hard
 #   soft - Правильный способ установки. Этот вариант по умолчанию.
 #   hard - Для любителей "пожестче" ;)
-#    choose_your_love: "soft"
+    choose_your_love: "soft"
+#   Здесь задаем версию ruby
+    ruby_version: "ruby-2.6.0"
 
 #   Эти переменные можно не определять. Если их не определить -
 #   тогда возьмутся дефолтные значения из ~./ansible/install_postgres/defaults/main.yml
@@ -35,12 +37,12 @@
 
 
   roles:
-  - geerlingguy.repo-epel
-  - geerlingguy.repo-remi
+#  - geerlingguy.repo-epel
+#  - geerlingguy.repo-remi
 #  - geerlingguy.nginx
-  - { role: rvm.ruby,
+#  - { role: rvm.ruby,
       tags: ruby,
-      rvm1_rubies: ['ruby-2.6.0'],
+      rvm1_rubies: "['{{ ruby_version }}']",
       rvm1_install_flags: '--auto-dotfiles',
       rvm1_install_path: /usr/local/rvm,
       rvm1_user: root,

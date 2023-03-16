@@ -1,0 +1,44 @@
+#Настраиваем файл deploy.rb
+- name: "Config /config/deploy.rb"
+  ansible.builtin.replace:
+    path: "{{ app_dir }}/config/deploy.rb"
+    regexp: "{{ item.regexp }}"
+    replace: "{{ item.replace }}"
+  with_items:
+    - regexp: "rvm_ruby_version, 'ruby-2.5.1'"
+      replace: "rvm_ruby_version, '{{ ruby_version }}'"
+    - regexp: "application, 'x'"
+      replace: "application, '{{ app_name }}'"
+    - regexp: "repo_url, 'git@gitlab.southbridge.ru:web/x.git'"
+      replace: "repo_url, 'git@gitlab.slurm.io/edu/xpaste_practicum.git'"
+    - regexp: "deploy_to, '/work/www/x'"
+      replace: "deploy_to, '{{ app_dir }}'"
+
+# Настраиваем puma-production.rb
+- name: "Config /config/puma-production.rb"
+  ansible.builtin.replace:
+    path: "{{ app_dir }}/config/puma-production.rb"
+    regexp: "{{ item.regexp }}"
+    replace: "{{ item.replace }}"
+  with_items:
+    - regexp: "directory '/work/www/x/current'"
+      replace: "directory '{{ app_dir }}/current'"
+    - regexp: "rackup '/work/www/x/current/config.ru'"
+      replace: "rackup '{{ app_dir }}/current/config.ru'"
+    - regexp: "pidfile '/work/www/x/shared/tmp/pids/puma.pid'"
+      replace: "pidfile '{{ app_dir }}/shared/tmp/pids/puma.pid'"
+    - regexp: "state_path '/work/www/x/shared/tmp/pids/puma.state'"
+      replace: "state_path '{{ app_dir }}/shared/tmp/pids/puma.state'"
+    - regexp: "stdout_redirect '{{ app_dir }}/shared/log/puma_access.log', '{{ app_dir }}/shared/log/puma_error.log', true"
+      replace: "stdout_redirect '{{ app_dir }}/shared/log/puma_access.log', '{{ app_dir }}/shared/log/puma_error.log', true"
+    - regexp: "bind 'unix:///work/www/x/shared/socket/x.sock'"
+      replace: "bind 'unix://{{ app_dir }}/shared/socket/x.sock'"
+    - regexp: "ENV['BUNDLE_GEMFILE'] = '{{ app_dir }}/current/Gemfile'"
+      replace: "ENV['BUNDLE_GEMFILE'] = '{{ app_dir }}/current/Gemfile'"
+
+# Настраиваем /deploy/production.rb
+- name: "Config /config/deploy/production.rb"
+  ansible.builtin.replace:
+    path: "{{ app_dir }}/config/deploy/production.rb"
+    regexp: "server 'xpaste.pro', user: 'x', roles: %w(web app db)"
+    replace: "server '{{ xapps_node }}', user: '{{ user_app }}', roles: %w(web app db), password: '{{ user_app_pass }}'"

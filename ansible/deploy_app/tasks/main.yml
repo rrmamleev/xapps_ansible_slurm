@@ -4,15 +4,13 @@
 # Устанаваливаем зависимости приложения
 - include_tasks: install_dependencies.yml
 
-# Копируем файлы проекта
-- include_tasks: copy_files_app.yml
+# Копируем с репозитория приложение
+- include_tasks: copy_files_git.yml
 
-# Создаём Бандл приложения
-- include_tasks: config_bandle.yml
+# Разворачиваем приложение правильным способом (soft)
+- include_tasks: install_app_soft.yml
+  when: soft choose_your_love
 
-# Создаём сервис приложения и стартуем его
-# Также в этом файле мы настраиваем миграцию БД
-- include_tasks: config_service.yml
-
-# Копируем nginx.conf, robots.txt и перезапускаем nginx
-- include_tasks: config_nginx.yml
+# Разворачиваем приложение альтернативным способом (hard)
+- include_tasks: install_app_hard.yml
+  when: hard choose_your_love
